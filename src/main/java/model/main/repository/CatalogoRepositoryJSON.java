@@ -13,11 +13,8 @@ import model.main.menu.ProductoCatalogo;
  *
  * @author ADAN
  */
-public class CatalogoRepositoryJSON {
+public class CatalogoRepositoryJSON implements ICatalogoRepository {
     String filePath;
-    public CatalogoRepositoryJSON(String filePath) {
-        this.filePath = filePath;
-    }
     public void saveData(Object data) {
         // Lógica para guardar datos en un archivo JSON
     }
