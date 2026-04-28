@@ -21,11 +21,25 @@ public class Gerente {
         Cliente miCliente= new Cliente(nombreCliente,idCliente);
 
     }
-    public String realizarReunion(Cliente c){
+public Cliente realizarReunion(Cliente c){
+     System.out.println("Reunión con el cliente: " + c.getNombre());
+    setCliente();
+        // lógica de negocio aquí
 
-        return info;
-    
-    }
+    return c;
+}
+public void setProveedorComercial(){
+    System.out.println("Introduzca el nombre del proveedor comercial");
+    String nombreProveedor=sc.nextLine();
+    System.out.println("Introduzca el id del proveedor comercial");
+    String idProveedor=sc.nextLine();
+    ProveedorComercial miProveedor= new ProveedorComercial(idProveedor,nombreProveedor);
+}
+public void proveerInformacion(){
+    System.out.println("Introduzca la información a revisar");
+    info=sc.nextLine();
+    System.out.println("Revisando la información: " + info);
+}
 public Gerente(String id,String nombre){
     this.id=id;
     this.nombre=nombre;

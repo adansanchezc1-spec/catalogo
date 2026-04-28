@@ -9,5 +9,19 @@ package model.main.menu;
  * @author ADAN
  */
 public class ProveedorComercial {
+    private String id;
+    private String nombre;  
+    public ProveedorComercial(String id,String nombre){
+        this.id=id;
+        this.nombre=nombre;
+    }
+
+     public String getId() {
+        return id;
+    }
+
+     public String getNombre() {
+        return nombre;
+    }
     
 }
