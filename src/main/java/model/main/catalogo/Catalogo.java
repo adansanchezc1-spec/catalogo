@@ -3,8 +3,8 @@
  */
 
 package model.main.catalogo;
+import model.main.controller.CatalogoController;
 import model.main.menu.Gerente;
-
 /**
  *
  * @author ADAN
@@ -12,9 +12,8 @@ import model.main.menu.Gerente;
 public class Catalogo {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
-        Gerente c = new Gerente("1","Adan");
-        c.realizarReunion(new model.main.menu.Cliente("Cliente1","123"));
-        
+        CatalogoController controller = new CatalogoController();
+        Gerente gerente = new Gerente("1", "Adan");
+        controller.ejecutarGerente(gerente);
     }
 }

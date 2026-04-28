@@ -13,7 +13,7 @@ public class Gerente {
     private String info;
     Scanner sc= new Scanner(System.in);
 
-    public void setCliente(){
+public void setCliente(){
         System.out.println("Introduzca el nombre del cliente");
         nombreCliente=sc.nextLine();
         System.out.println("Introduzca el id del cliente");
