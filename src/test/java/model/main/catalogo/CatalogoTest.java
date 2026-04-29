@@ -3,14 +3,22 @@ package model.main.catalogo;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-class CatalogoTest {
+public class CatalogoTest {
 
     @Test
-    void testMainDoesNotThrow() {
-        // Test que el main no lance excepción, pero como usa Scanner, es limitado
-        // En un entorno real, usaría System.in mock
+    public void testClassCanBeLoaded() {
+        // Test que la clase Catalogo se puede cargar sin errores
         assertDoesNotThrow(() -> {
-            // No podemos ejecutar main fácilmente sin input, así que omitir
+            Class.forName("model.main.catalogo.Catalogo");
+        });
+    }
+
+    @Test
+    public void testMainMethodExists() {
+        // Test que el método main existe
+        assertDoesNotThrow(() -> {
+            Class<?> clazz = Class.forName("model.main.catalogo.Catalogo");
+            clazz.getMethod("main", String[].class);
         });
     }
 }
