@@ -1,24 +1,18 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model.main.menu;
 
-/**
- *
- * @author ADAN
- */
+import java.util.Objects;
+
 public class ProductoCatalogo {
-    private String id;
-    private String nombre;
-    private String descripcion;
-    private double precio;
+    private final String id;
+    private final String nombre;
+    private final String descripcion;
+    private final double precio;
     private ProveedorComercial proveedor;
 
     public ProductoCatalogo(String id, String nombre, String descripcion, double precio, ProveedorComercial proveedor) {
-        this.id = id;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
+        this.id = Objects.requireNonNull(id, "El ID no puede ser nulo");
+        this.nombre = Objects.requireNonNull(nombre, "El nombre no puede ser nulo");
+        this.descripcion = Objects.requireNonNull(descripcion, "La descripcion no puede ser nula");
         this.precio = precio;
         this.proveedor = proveedor;
     }
@@ -48,7 +42,11 @@ public class ProductoCatalogo {
     }
 
     public String getInfo() {
-        return "ID: " + id + ", Nombre: " + nombre + ", Descripción: " + descripcion + ", Precio: " + precio + ", Proveedor: " + (proveedor != null ? proveedor.getNombre() : "N/A");
+        return "ID: " + id
+                + ", Nombre: " + nombre
+                + ", Descripción: " + descripcion
+                + ", Precio: " + precio
+                + ", Proveedor: " + (proveedor != null ? proveedor.getNombre() : "N/A");
     }
 
     @Override

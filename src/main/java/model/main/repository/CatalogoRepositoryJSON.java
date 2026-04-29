@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model.main.repository;
 
 import java.io.IOException;
@@ -16,10 +12,6 @@ import java.util.Objects;
 import model.main.menu.ProductoCatalogo;
 import model.main.menu.ProveedorComercial;
 
-/**
- *
- * @author ADAN
- */
 public class CatalogoRepositoryJSON implements ICatalogoRepository {
     private static final String FILE_NAME = "catalogo.json";
     private final Path filePath;
@@ -99,12 +91,15 @@ public class CatalogoRepositoryJSON implements ICatalogoRepository {
                 return new ArrayList<>();
             }
             if (!content.startsWith("[") || !content.endsWith("]")) {
-                throw new IllegalStateException("Formato JSON inválido en " + filePath);
+                throw new IllegalStateException("Formato JSON invalido en " + filePath);
             }
             String arrayContent = content.substring(1, content.length() - 1).trim();
             if (arrayContent.isEmpty()) {
                 return new ArrayList<>();
             }
+
+            // El archivo usa un JSON plano controlado por la aplicacion.
+            // Si el formato crece, conviene reemplazar este parser por una libreria JSON.
             List<ProductoCatalogo> products = new ArrayList<>();
             List<String> objectStrings = splitJsonObjects(arrayContent);
             for (String objectString : objectStrings) {
@@ -115,7 +110,9 @@ public class CatalogoRepositoryJSON implements ICatalogoRepository {
                 double precio = precioText == null ? 0.0 : Double.parseDouble(precioText);
                 String proveedorId = readJsonString(objectString, "proveedorId");
                 String proveedorNombre = readJsonString(objectString, "proveedorNombre");
-                ProveedorComercial proveedor = proveedorId != null && proveedorNombre != null ? new ProveedorComercial(proveedorId, proveedorNombre) : null;
+                ProveedorComercial proveedor = proveedorId != null && proveedorNombre != null
+                        ? new ProveedorComercial(proveedorId, proveedorNombre)
+                        : null;
                 products.add(new ProductoCatalogo(id, nombre, descripcion, precio, proveedor));
             }
             return products;
@@ -130,13 +127,17 @@ public class CatalogoRepositoryJSON implements ICatalogoRepository {
         for (int i = 0; i < products.size(); i++) {
             ProductoCatalogo product = products.get(i);
             json.append("{")
-                .append("\"id\":\"").append(escape(product.getId())).append("\",")
-                .append("\"nombre\":\"").append(escape(product.getNombre())).append("\",")
-                .append("\"descripcion\":\"").append(escape(product.getDescripcion())).append("\",")
-                .append("\"precio\":").append(product.getPrecio())
-                .append(",\"proveedorId\":\"").append(product.getProveedor() != null ? escape(product.getProveedor().getId()) : "").append("\"")
-                .append(",\"proveedorNombre\":\"").append(product.getProveedor() != null ? escape(product.getProveedor().getNombre()) : "").append("\"")
-                .append("}");
+                    .append("\"id\":\"").append(escape(product.getId())).append("\",")
+                    .append("\"nombre\":\"").append(escape(product.getNombre())).append("\",")
+                    .append("\"descripcion\":\"").append(escape(product.getDescripcion())).append("\",")
+                    .append("\"precio\":").append(product.getPrecio())
+                    .append(",\"proveedorId\":\"")
+                    .append(product.getProveedor() != null ? escape(product.getProveedor().getId()) : "")
+                    .append("\"")
+                    .append(",\"proveedorNombre\":\"")
+                    .append(product.getProveedor() != null ? escape(product.getProveedor().getNombre()) : "")
+                    .append("\"")
+                    .append("}");
             if (i < products.size() - 1) {
                 json.append(",");
             }
@@ -160,6 +161,8 @@ public class CatalogoRepositoryJSON implements ICatalogoRepository {
         List<String> items = new ArrayList<>();
         int depth = 0;
         int start = 0;
+
+        // Se separa por llaves para no cortar campos de texto que contengan comas.
         for (int i = 0; i < json.length(); i++) {
             char current = json.charAt(i);
             if (current == '{') {
@@ -217,7 +220,7 @@ public class CatalogoRepositoryJSON implements ICatalogoRepository {
                 value.append(c);
                 end++;
             }
-            return "\"" + value.toString() + "\"";
+            return "\"" + value + "\"";
         }
         int end = pos;
         while (end < json.length() && ",}]".indexOf(json.charAt(end)) == -1) {

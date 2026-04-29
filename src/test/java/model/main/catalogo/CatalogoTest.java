@@ -1,22 +1,19 @@
 package model.main.catalogo;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class CatalogoTest {
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
+class CatalogoTest {
 
     @Test
-    public void testClassCanBeLoaded() {
-        // Test que la clase Catalogo se puede cargar sin errores
-        Assertions.assertDoesNotThrow(() -> {
-            Class.forName("model.main.catalogo.Catalogo");
-        });
+    void testClassCanBeLoaded() {
+        assertDoesNotThrow(() -> Class.forName("model.main.catalogo.Catalogo"));
     }
 
     @Test
-    public void testMainMethodExists() {
-        // Test que el método main existe
-        Assertions.assertDoesNotThrow(() -> {
+    void testMainMethodExists() {
+        assertDoesNotThrow(() -> {
             Class<?> clazz = Class.forName("model.main.catalogo.Catalogo");
             clazz.getMethod("main", String[].class);
         });

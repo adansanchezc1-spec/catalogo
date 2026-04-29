@@ -1,26 +1,25 @@
 package model.main.controller;
 
-import model.main.menu.Gerente;
+import java.util.List;
+import java.util.Objects;
+
 import model.main.menu.Cliente;
+import model.main.menu.Gerente;
 import model.main.menu.ProductoCatalogo;
 import model.main.menu.ProveedorComercial;
 import model.main.service.CatalogoService;
-import java.util.List;
+import model.main.service.ICatalogoService;
 
-/**
- *
- * @author ADAN
- */
 public class CatalogoController {
 
-    private final CatalogoService service;
+    private final ICatalogoService service;
 
     public CatalogoController() {
         this(new CatalogoService());
     }
 
-    public CatalogoController(CatalogoService service) {
-        this.service = service;
+    public CatalogoController(ICatalogoService service) {
+        this.service = Objects.requireNonNull(service, "El servicio no puede ser nulo");
     }
 
     public void crearProducto(ProductoCatalogo producto) {
@@ -49,14 +48,13 @@ public class CatalogoController {
 
     public void interactuarConGerente(Gerente gerente) {
         System.out.println("Gerente: " + gerente.getNombre());
-        System.out.println("El gerente está revisando el catálogo...");
+        System.out.println("El gerente esta revisando el catalogo...");
         gerente.solicitarCatalogo(this);
     }
 
     public void ejecutarGerente(Gerente gerente) {
-        // Ejemplo de uso
         ProveedorComercial proveedor = new ProveedorComercial("Prov001", "Proveedor Ejemplo");
-        ProductoCatalogo producto1 = new ProductoCatalogo("P001", "Cámara", "Cámara digital", 2500.0, proveedor);
+        ProductoCatalogo producto1 = new ProductoCatalogo("P001", "Camara", "Camara digital", 2500.0, proveedor);
         ProductoCatalogo producto2 = new ProductoCatalogo("P002", "Televisor", "TV 4K", 7800.0, proveedor);
         if (obtenerProductoPorId("P001") == null) {
             crearProducto(producto1);
@@ -74,7 +72,7 @@ public class CatalogoController {
         System.out.println(obtenerProductoPorId("P002"));
 
         eliminarProducto("P001");
-        System.out.println("\nProductos restantes después de eliminar P001:");
+        System.out.println("\nProductos restantes despues de eliminar P001:");
         obtenerProductos().forEach(producto -> System.out.println(producto.getInfo()));
 
         gerente.realizarReunion(new Cliente("Cliente1", "123"));

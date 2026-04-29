@@ -1,28 +1,21 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model.main.menu;
 
 import java.util.Objects;
 
-/**
- *
- * @author ADAN
- */
 public class ProveedorComercial {
-    private String id;
-    private String nombre;  
-    public ProveedorComercial(String id,String nombre){
-        this.id=id;
-        this.nombre=nombre;
+    private final String id;
+    private final String nombre;
+
+    public ProveedorComercial(String id, String nombre) {
+        this.id = Objects.requireNonNull(id, "El ID no puede ser nulo");
+        this.nombre = Objects.requireNonNull(nombre, "El nombre no puede ser nulo");
     }
 
-     public String getId() {
+    public String getId() {
         return id;
     }
 
-     public String getNombre() {
+    public String getNombre() {
         return nombre;
     }
 
