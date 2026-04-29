@@ -2,36 +2,40 @@ package model.main.controller;
 
 import model.main.menu.ProductoCatalogo;
 import model.main.menu.ProveedorComercial;
+import model.main.repository.CatalogoRepositoryJSON;
+import model.main.service.CatalogoService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class CatalogoControllerTest {
 
     private CatalogoController controller;
+    private Path tempFile;
 
     @BeforeEach
-    void setUp() {
-        controller = new CatalogoController();
+    void setUp() throws Exception {
+        tempFile = Files.createTempFile("catalogo_controller_test", ".json");
+        controller = new CatalogoController(new CatalogoService(new CatalogoRepositoryJSON(tempFile)));
     }
 
     @AfterEach
     void tearDown() throws Exception {
-        Path filePath = Paths.get("catalogo.json");
-        if (Files.exists(filePath)) {
-            Files.delete(filePath);
+        if (Files.exists(tempFile)) {
+            Files.delete(tempFile);
         }
     }
 
     @Test
     void testCrearProducto() {
         ProveedorComercial proveedor = new ProveedorComercial("P1", "Proveedor Test");
-        ProductoCatalogo producto = new ProductoCatalogo("ID1", "Producto Test", "Descripción", 100.0, proveedor);
+        ProductoCatalogo producto = new ProductoCatalogo("ID1", "Producto Test", "Descripcion", 100.0, proveedor);
 
         controller.crearProducto(producto);
 
@@ -42,7 +46,7 @@ class CatalogoControllerTest {
     @Test
     void testObtenerProductos() {
         ProveedorComercial proveedor = new ProveedorComercial("P1", "Proveedor Test");
-        ProductoCatalogo producto = new ProductoCatalogo("ID1", "Producto Test", "Descripción", 100.0, proveedor);
+        ProductoCatalogo producto = new ProductoCatalogo("ID1", "Producto Test", "Descripcion", 100.0, proveedor);
         controller.crearProducto(producto);
 
         List<ProductoCatalogo> productos = controller.obtenerProductos();
@@ -52,10 +56,10 @@ class CatalogoControllerTest {
     @Test
     void testActualizarProducto() {
         ProveedorComercial proveedor = new ProveedorComercial("P1", "Proveedor Test");
-        ProductoCatalogo producto = new ProductoCatalogo("ID1", "Producto Test", "Descripción", 100.0, proveedor);
+        ProductoCatalogo producto = new ProductoCatalogo("ID1", "Producto Test", "Descripcion", 100.0, proveedor);
         controller.crearProducto(producto);
 
-        ProductoCatalogo updated = new ProductoCatalogo("ID1", "Producto Updated", "Descripción", 200.0, proveedor);
+        ProductoCatalogo updated = new ProductoCatalogo("ID1", "Producto Updated", "Descripcion", 200.0, proveedor);
         controller.actualizarProducto(updated);
 
         ProductoCatalogo found = controller.obtenerProductoPorId("ID1");
@@ -65,7 +69,7 @@ class CatalogoControllerTest {
     @Test
     void testEliminarProducto() {
         ProveedorComercial proveedor = new ProveedorComercial("P1", "Proveedor Test");
-        ProductoCatalogo producto = new ProductoCatalogo("ID1", "Producto Test", "Descripción", 100.0, proveedor);
+        ProductoCatalogo producto = new ProductoCatalogo("ID1", "Producto Test", "Descripcion", 100.0, proveedor);
         controller.crearProducto(producto);
 
         controller.eliminarProducto("ID1");
@@ -77,7 +81,7 @@ class CatalogoControllerTest {
     @Test
     void testObtenerProductoPorId() {
         ProveedorComercial proveedor = new ProveedorComercial("P1", "Proveedor Test");
-        ProductoCatalogo producto = new ProductoCatalogo("ID1", "Producto Test", "Descripción", 100.0, proveedor);
+        ProductoCatalogo producto = new ProductoCatalogo("ID1", "Producto Test", "Descripcion", 100.0, proveedor);
         controller.crearProducto(producto);
 
         ProductoCatalogo found = controller.obtenerProductoPorId("ID1");
@@ -91,7 +95,7 @@ class CatalogoControllerTest {
     void testCambiarProveedor() {
         ProveedorComercial proveedor1 = new ProveedorComercial("P1", "Proveedor 1");
         ProveedorComercial proveedor2 = new ProveedorComercial("P2", "Proveedor 2");
-        ProductoCatalogo producto = new ProductoCatalogo("ID1", "Producto Test", "Descripción", 100.0, proveedor1);
+        ProductoCatalogo producto = new ProductoCatalogo("ID1", "Producto Test", "Descripcion", 100.0, proveedor1);
         controller.crearProducto(producto);
 
         controller.cambiarProveedor("ID1", proveedor2);

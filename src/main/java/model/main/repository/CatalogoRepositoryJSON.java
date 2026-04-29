@@ -25,7 +25,11 @@ public class CatalogoRepositoryJSON implements ICatalogoRepository {
     private final Path filePath;
 
     public CatalogoRepositoryJSON() {
-        this.filePath = Paths.get(FILE_NAME);
+        this(Paths.get(FILE_NAME));
+    }
+
+    public CatalogoRepositoryJSON(Path filePath) {
+        this.filePath = Objects.requireNonNull(filePath, "La ruta del archivo no puede ser nula");
         ensureFileExists();
     }
 

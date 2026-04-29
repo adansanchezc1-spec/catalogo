@@ -14,7 +14,11 @@ public class CatalogoService {
     private final CatalogoRepositoryJSON repository;
 
     public CatalogoService() {
-        this.repository = new CatalogoRepositoryJSON();
+        this(new CatalogoRepositoryJSON());
+    }
+
+    public CatalogoService(CatalogoRepositoryJSON repository) {
+        this.repository = repository;
     }
 
     public void crearProducto(ProductoCatalogo producto) {

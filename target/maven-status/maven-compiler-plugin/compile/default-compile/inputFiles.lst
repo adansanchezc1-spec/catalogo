@@ -1,1 +1,9 @@
 C:\Users\ADAN\OneDrive\Documentos\NetBeansProjects\catalogo\src\main\java\model\main\catalogo\Catalogo.java
+C:\Users\ADAN\OneDrive\Documentos\NetBeansProjects\catalogo\src\main\java\model\main\controller\CatalogoController.java
+C:\Users\ADAN\OneDrive\Documentos\NetBeansProjects\catalogo\src\main\java\model\main\menu\Cliente.java
+C:\Users\ADAN\OneDrive\Documentos\NetBeansProjects\catalogo\src\main\java\model\main\menu\Gerente.java
+C:\Users\ADAN\OneDrive\Documentos\NetBeansProjects\catalogo\src\main\java\model\main\menu\ProductoCatalogo.java
+C:\Users\ADAN\OneDrive\Documentos\NetBeansProjects\catalogo\src\main\java\model\main\menu\ProveedorComercial.java
+C:\Users\ADAN\OneDrive\Documentos\NetBeansProjects\catalogo\src\main\java\model\main\repository\CatalogoRepositoryJSON.java
+C:\Users\ADAN\OneDrive\Documentos\NetBeansProjects\catalogo\src\main\java\model\main\repository\ICatalogoRepository.java
+C:\Users\ADAN\OneDrive\Documentos\NetBeansProjects\catalogo\src\main\java\model\main\service\CatalogoService.java

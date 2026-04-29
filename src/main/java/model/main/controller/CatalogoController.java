@@ -16,7 +16,11 @@ public class CatalogoController {
     private final CatalogoService service;
 
     public CatalogoController() {
-        this.service = new CatalogoService();
+        this(new CatalogoService());
+    }
+
+    public CatalogoController(CatalogoService service) {
+        this.service = service;
     }
 
     public void crearProducto(ProductoCatalogo producto) {

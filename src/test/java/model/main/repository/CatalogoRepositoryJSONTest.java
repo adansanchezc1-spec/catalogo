@@ -5,11 +5,12 @@ import model.main.menu.ProveedorComercial;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class CatalogoRepositoryJSONTest {
@@ -20,24 +21,20 @@ class CatalogoRepositoryJSONTest {
     @BeforeEach
     void setUp() throws IOException {
         tempFile = Files.createTempFile("catalogo_test", ".json");
-        // Crear una instancia con archivo temporal, pero como es hardcodeado, usar reflexión o cambiar constructor
-        // Para simplicidad, usar el archivo por defecto y limpiar después
-        repository = new CatalogoRepositoryJSON();
+        repository = new CatalogoRepositoryJSON(tempFile);
     }
 
     @AfterEach
     void tearDown() throws IOException {
-        // Limpiar el archivo catalogo.json
-        Path filePath = Paths.get("catalogo.json");
-        if (Files.exists(filePath)) {
-            Files.delete(filePath);
+        if (Files.exists(tempFile)) {
+            Files.delete(tempFile);
         }
     }
 
     @Test
     void testSaveAndFindAll() {
         ProveedorComercial proveedor = new ProveedorComercial("P1", "Proveedor Test");
-        ProductoCatalogo producto = new ProductoCatalogo("ID1", "Producto Test", "Descripción", 100.0, proveedor);
+        ProductoCatalogo producto = new ProductoCatalogo("ID1", "Producto Test", "Descripcion", 100.0, proveedor);
 
         repository.saveData(producto);
 
@@ -49,10 +46,10 @@ class CatalogoRepositoryJSONTest {
     @Test
     void testUpdateData() {
         ProveedorComercial proveedor = new ProveedorComercial("P1", "Proveedor Test");
-        ProductoCatalogo producto = new ProductoCatalogo("ID1", "Producto Test", "Descripción", 100.0, proveedor);
+        ProductoCatalogo producto = new ProductoCatalogo("ID1", "Producto Test", "Descripcion", 100.0, proveedor);
         repository.saveData(producto);
 
-        ProductoCatalogo updated = new ProductoCatalogo("ID1", "Producto Updated", "Descripción Updated", 200.0, proveedor);
+        ProductoCatalogo updated = new ProductoCatalogo("ID1", "Producto Updated", "Descripcion Updated", 200.0, proveedor);
         repository.updateData(updated);
 
         ProductoCatalogo found = repository.findDataById("ID1");
@@ -63,7 +60,7 @@ class CatalogoRepositoryJSONTest {
     @Test
     void testDeleteData() {
         ProveedorComercial proveedor = new ProveedorComercial("P1", "Proveedor Test");
-        ProductoCatalogo producto = new ProductoCatalogo("ID1", "Producto Test", "Descripción", 100.0, proveedor);
+        ProductoCatalogo producto = new ProductoCatalogo("ID1", "Producto Test", "Descripcion", 100.0, proveedor);
         repository.saveData(producto);
 
         repository.deleteData("ID1");
@@ -75,7 +72,7 @@ class CatalogoRepositoryJSONTest {
     @Test
     void testFindDataById() {
         ProveedorComercial proveedor = new ProveedorComercial("P1", "Proveedor Test");
-        ProductoCatalogo producto = new ProductoCatalogo("ID1", "Producto Test", "Descripción", 100.0, proveedor);
+        ProductoCatalogo producto = new ProductoCatalogo("ID1", "Producto Test", "Descripcion", 100.0, proveedor);
         repository.saveData(producto);
 
         ProductoCatalogo found = repository.findDataById("ID1");
