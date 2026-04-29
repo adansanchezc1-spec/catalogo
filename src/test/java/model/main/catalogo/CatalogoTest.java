@@ -1,7 +1,7 @@
 package model.main.catalogo;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class CatalogoTest {
 
