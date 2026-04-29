@@ -1,48 +1,80 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model.main.controller;
-import model.main.menu.Cliente;
-import model.main.menu.Gerente;
-import model.main.menu.ProductoCatalogo;
-import model.main.repository.CatalogoRepositoryJSON;
 
+import model.main.menu.Gerente;
+import model.main.menu.Cliente;
+import model.main.menu.ProductoCatalogo;
+import model.main.menu.ProveedorComercial;
+import model.main.service.CatalogoService;
+import java.util.List;
 
 /**
  *
  * @author ADAN
  */
 public class CatalogoController {
-    
-    public void ejecutarGerente(Gerente c){
-        CatalogoRepositoryJSON repository = new CatalogoRepositoryJSON();
 
-        ProductoCatalogo producto1 = new ProductoCatalogo("P001", "Cámara", "Cámara digital", 2500.0);
-        ProductoCatalogo producto2 = new ProductoCatalogo("P002", "Televisor", "TV 4K", 7800.0);
-        if (repository.findDataById("P001") == null) {
-            repository.saveData(producto1);
+    private final CatalogoService service;
+
+    public CatalogoController() {
+        this.service = new CatalogoService();
+    }
+
+    public void crearProducto(ProductoCatalogo producto) {
+        service.crearProducto(producto);
+    }
+
+    public List<ProductoCatalogo> obtenerProductos() {
+        return service.obtenerProductos();
+    }
+
+    public void actualizarProducto(ProductoCatalogo producto) {
+        service.actualizarProducto(producto);
+    }
+
+    public void eliminarProducto(String id) {
+        service.eliminarProducto(id);
+    }
+
+    public ProductoCatalogo obtenerProductoPorId(String id) {
+        return service.obtenerProductoPorId(id);
+    }
+
+    public void cambiarProveedor(String idProducto, ProveedorComercial nuevoProveedor) {
+        service.cambiarProveedor(idProducto, nuevoProveedor);
+    }
+
+    public void interactuarConGerente(Gerente gerente) {
+        System.out.println("Gerente: " + gerente.getNombre());
+        System.out.println("El gerente está revisando el catálogo...");
+        gerente.solicitarCatalogo(this);
+    }
+
+    public void ejecutarGerente(Gerente gerente) {
+        // Ejemplo de uso
+        ProveedorComercial proveedor = new ProveedorComercial("Prov001", "Proveedor Ejemplo");
+        ProductoCatalogo producto1 = new ProductoCatalogo("P001", "Cámara", "Cámara digital", 2500.0, proveedor);
+        ProductoCatalogo producto2 = new ProductoCatalogo("P002", "Televisor", "TV 4K", 7800.0, proveedor);
+        if (obtenerProductoPorId("P001") == null) {
+            crearProducto(producto1);
         }
-        if (repository.findDataById("P002") == null) {
-            repository.saveData(producto2);
+        if (obtenerProductoPorId("P002") == null) {
+            crearProducto(producto2);
         }
 
         System.out.println("Productos guardados en catalogo.json:");
-        repository.findAll().forEach(producto -> System.out.println(producto.getInfo()));
+        obtenerProductos().forEach(producto -> System.out.println(producto.getInfo()));
 
-        ProductoCatalogo productoActualizado = new ProductoCatalogo("P002", "Televisor", "TV 4K Smart", 8200.0);
-        repository.updateData(productoActualizado);
+        ProductoCatalogo productoActualizado = new ProductoCatalogo("P002", "Televisor", "TV 4K Smart", 8200.0, proveedor);
+        actualizarProducto(productoActualizado);
         System.out.println("\nProducto actualizado:");
-        System.out.println(repository.findDataById("P002"));
+        System.out.println(obtenerProductoPorId("P002"));
 
-        repository.deleteData("P001");
+        eliminarProducto("P001");
         System.out.println("\nProductos restantes después de eliminar P001:");
-        repository.findAll().forEach(producto -> System.out.println(producto.getInfo()));
+        obtenerProductos().forEach(producto -> System.out.println(producto.getInfo()));
 
-        Gerente c1 = new Gerente("1","Adan");
-        c1.realizarReunion(new Cliente("Cliente1","123"));
-        c1.setProveedorComercial();
-        c1.proveerInformacion();
+        gerente.realizarReunion(new Cliente("Cliente1", "123"));
+        gerente.setProveedorComercial();
+        gerente.proveerInformacion();
     }
-
 }

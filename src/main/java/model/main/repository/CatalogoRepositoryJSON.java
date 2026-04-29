@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Objects;
 
 import model.main.menu.ProductoCatalogo;
+import model.main.menu.ProveedorComercial;
 
 /**
  *
@@ -108,7 +109,10 @@ public class CatalogoRepositoryJSON implements ICatalogoRepository {
                 String descripcion = readJsonString(objectString, "descripcion");
                 String precioText = readJsonValue(objectString, "precio");
                 double precio = precioText == null ? 0.0 : Double.parseDouble(precioText);
-                products.add(new ProductoCatalogo(id, nombre, descripcion, precio));
+                String proveedorId = readJsonString(objectString, "proveedorId");
+                String proveedorNombre = readJsonString(objectString, "proveedorNombre");
+                ProveedorComercial proveedor = proveedorId != null && proveedorNombre != null ? new ProveedorComercial(proveedorId, proveedorNombre) : null;
+                products.add(new ProductoCatalogo(id, nombre, descripcion, precio, proveedor));
             }
             return products;
         } catch (IOException ex) {
@@ -126,6 +130,8 @@ public class CatalogoRepositoryJSON implements ICatalogoRepository {
                 .append("\"nombre\":\"").append(escape(product.getNombre())).append("\",")
                 .append("\"descripcion\":\"").append(escape(product.getDescripcion())).append("\",")
                 .append("\"precio\":").append(product.getPrecio())
+                .append(",\"proveedorId\":\"").append(product.getProveedor() != null ? escape(product.getProveedor().getId()) : "").append("\"")
+                .append(",\"proveedorNombre\":\"").append(product.getProveedor() != null ? escape(product.getProveedor().getNombre()) : "").append("\"")
                 .append("}");
             if (i < products.size() - 1) {
                 json.append(",");

@@ -23,5 +23,8 @@ public class ProveedorComercial {
      public String getNombre() {
         return nombre;
     }
-    
+
+    public ProductoCatalogo crearProductoEjemplo() {
+        return new ProductoCatalogo("P003", "Laptop", "Laptop gaming", 15000.0, this);
+    }
 }
